@@ -1,0 +1,27 @@
+{
+  "name": "tournament-manager",
+  "version": "1.0.0",
+  "description": "Battle royale tournament points calculator",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux"
+  },
+  "build": {
+    "appId": "com.cepssss.tournament-manager",
+    "productName": "Tournament Manager",
+    "directories": { "output": "dist" },
+    "files": ["**/*", "!dist/**", "!node_modules/.cache/**"],
+    "win": { "target": "nsis" },
+    "mac": { "target": "dmg" },
+    "linux": { "target": "AppImage" }
+  },
+  "dependencies": {
+    "electron": "^28.3.0"
+  },
+  "devDependencies": {
+    "electron-builder": "^24.13.3"
+  }
+}

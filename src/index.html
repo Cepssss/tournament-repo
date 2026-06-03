@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+  <title>Tournament Manager</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ===== HOME VIEW ===== -->
+  <div id="view-home" class="view active">
+    <header class="app-header">
+      <div class="header-brand">
+        <span class="brand-icon">🏆</span>
+        <h1>Tournament Manager</h1>
+      </div>
+      <button id="btn-new-tournament" class="btn btn-primary">+ New Tournament</button>
+    </header>
+    <main>
+      <div id="empty-state" class="empty-state">
+        <div class="empty-icon">🎮</div>
+        <h2>No Tournaments Yet</h2>
+        <p>Create your first tournament to get started.</p>
+        <button id="btn-new-tournament-empty" class="btn btn-primary">+ Create Tournament</button>
+      </div>
+      <div id="tournaments-grid" class="tournaments-grid"></div>
+    </main>
+  </div>
+
+  <!-- ===== TOURNAMENT VIEW ===== -->
+  <div id="view-tournament" class="view">
+    <header class="app-header">
+      <button id="btn-back" class="btn btn-ghost">← Back</button>
+      <h1 id="tournament-title" class="truncate"></h1>
+      <div class="header-actions">
+        <button id="btn-add-game" class="btn btn-primary">+ Add Game</button>
+        <button id="btn-delete-tournament" class="btn btn-danger">Delete</button>
+      </div>
+    </header>
+    <main class="tournament-main">
+      <div id="complete-banner" class="complete-banner" hidden>
+        🏆 Tournament Complete — Winner: <strong id="winner-name"></strong>
+      </div>
+      <div class="tournament-layout">
+        <section class="standings-section">
+          <div class="section-header">
+            <h2>Standings</h2>
+            <span id="games-progress" class="badge">0 / 5 games</span>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead id="standings-head"></thead>
+              <tbody id="standings-body"></tbody>
+            </table>
+          </div>
+        </section>
+        <section class="games-section">
+          <div class="section-header">
+            <h2>Games</h2>
+          </div>
+          <div id="games-list" class="games-list"></div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- ===== MODAL: New Tournament ===== -->
+  <div id="modal-tournament" class="overlay" hidden>
+    <div class="modal">
+      <div class="modal-header">
+        <h2>New Tournament</h2>
+        <button class="close-btn" data-close="modal-tournament">✕</button>
+      </div>
+      <div class="modal-body">
+        <label class="field-label" for="input-tournament-name">Tournament Name</label>
+        <input id="input-tournament-name" class="field-input" type="text"
+               placeholder="e.g. Season 1 Finals" maxlength="60" autocomplete="off">
+        <div class="teams-label">
+          <span class="field-label">Teams (15)</span>
+          <span class="field-hint">Leave blank to use default names</span>
+        </div>
+        <div id="teams-grid" class="teams-grid"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" data-close="modal-tournament">Cancel</button>
+        <button id="btn-create-tournament" class="btn btn-primary">Create Tournament</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MODAL: Game Entry ===== -->
+  <div id="modal-game" class="overlay" hidden>
+    <div class="modal modal-lg">
+      <div class="modal-header">
+        <h2 id="game-modal-title">Add Game</h2>
+        <button class="close-btn" data-close="modal-game">✕</button>
+      </div>
+      <div class="modal-body">
+        <p id="game-error" class="error-msg" hidden></p>
+        <div class="table-wrap">
+          <table class="data-table game-entry-table">
+            <thead>
+              <tr>
+                <th>Team</th>
+                <th>Position (1–15)</th>
+                <th>Kills</th>
+                <th>Multiplier</th>
+                <th>Points</th>
+              </tr>
+            </thead>
+            <tbody id="game-entry-body"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" data-close="modal-game">Cancel</button>
+        <button id="btn-save-game" class="btn btn-primary">Save Game</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
