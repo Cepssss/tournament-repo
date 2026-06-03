@@ -108,10 +108,16 @@ public class TournamentForm : Form
         var split = new SplitContainer
         {
             Dock = DockStyle.Fill,
-            SplitterDistance = 640,
-            Panel1MinSize = 350,
-            Panel2MinSize = 250,
             BackColor = AppColors.Background
+        };
+        // Panel min sizes and distance must be set after the control has a real width
+        Load += (_, _) =>
+        {
+            split.Panel1MinSize = 350;
+            split.Panel2MinSize = 250;
+            int available = split.Width - split.SplitterWidth;
+            split.SplitterDistance = Math.Max(350,
+                Math.Min(available - 250, (int)(available * 0.62)));
         };
 
         BuildStandingsPanel(split.Panel1);
