@@ -110,8 +110,8 @@ public class GameEntryForm : Form
             var prev = _existing?.Results.FirstOrDefault(r => r.Team == team);
             string pos   = prev != null ? prev.Position.ToString() : "";
             string kills = prev != null ? prev.Kills.ToString() : "";
-            string mult  = prev != null ? $"×{ScoreCalculator.GetMultiplier(prev.Position)}" : "—";
-            string pts   = prev != null ? ScoreCalculator.Fmt(ScoreCalculator.CalcScore(prev.Kills, prev.Position)) : "—";
+            string mult  = prev != null ? $"×{ScoreCalculator.GetMultiplier(prev.Position, _t.Multipliers)}" : "—";
+            string pts   = prev != null ? ScoreCalculator.Fmt(ScoreCalculator.CalcScore(prev.Kills, prev.Position, _t.Multipliers)) : "—";
 
             _dgv.Rows.Add(team, pos, kills, mult, pts);
         }
@@ -139,10 +139,10 @@ public class GameEntryForm : Form
 
         if (int.TryParse(posText, out int pos) && pos >= 1 && pos <= 15)
         {
-            double mult = ScoreCalculator.GetMultiplier(pos);
+            double mult = ScoreCalculator.GetMultiplier(pos, _t.Multipliers);
             _dgv.Rows[row].Cells[3].Value = $"×{mult}";
             if (int.TryParse(killsText, out int kills) && kills >= 0)
-                _dgv.Rows[row].Cells[4].Value = ScoreCalculator.Fmt(ScoreCalculator.CalcScore(kills, pos));
+                _dgv.Rows[row].Cells[4].Value = ScoreCalculator.Fmt(ScoreCalculator.CalcScore(kills, pos, _t.Multipliers));
             else
                 _dgv.Rows[row].Cells[4].Value = "—";
         }

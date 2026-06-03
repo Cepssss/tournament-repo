@@ -63,6 +63,12 @@ public class TournamentForm : Form
         btnDelT.Margin = new Padding(0, 11, 16, 11);
         btnDelT.Click += (_, _) => DeleteTournament();
 
+        var btnMult = AppColors.Btn("Multipliers", AppColors.Surface2, 105);
+        btnMult.Dock = DockStyle.Right;
+        btnMult.ForeColor = AppColors.Text;
+        btnMult.Margin = new Padding(0, 11, 8, 11);
+        btnMult.Click += (_, _) => EditMultipliers();
+
         _btnAdd = AppColors.Btn("+ Add Game", AppColors.Accent, 115);
         _btnAdd.Dock = DockStyle.Right;
         _btnAdd.Margin = new Padding(0, 11, 8, 11);
@@ -83,6 +89,7 @@ public class TournamentForm : Form
         header.Controls.Add(titleLbl);
         header.Controls.Add(btnBack);
         header.Controls.Add(btnDelT);
+        header.Controls.Add(btnMult);
         header.Controls.Add(_btnAdd);
         header.Controls.Add(_lblProgress);
 
@@ -292,6 +299,14 @@ public class TournamentForm : Form
     }
 
     // ── Actions ─────────────────────────────────────────────────────
+    private void EditMultipliers()
+    {
+        using var form = new MultipliersForm(_t.Multipliers);
+        if (form.ShowDialog(this) != DialogResult.OK) return;
+        _t.Multipliers = form.Result;
+        Persist();
+    }
+
     private void AddGame()
     {
         if (_t.Games.Count >= 5) return;

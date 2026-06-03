@@ -4,16 +4,17 @@ namespace TournamentManager.Helpers;
 
 public static class ScoreCalculator
 {
-    public static double GetMultiplier(int position) => position switch
-    {
-        1    => 1.6,
-        <= 5 => 1.4,
-        <= 10 => 1.2,
-        _    => 1.0
-    };
+    public static readonly List<double> DefaultMultipliers =
+        new() { 1.6, 1.4, 1.4, 1.4, 1.4, 1.2, 1.2, 1.2, 1.2, 1.2, 1.0, 1.0, 1.0, 1.0, 1.0 };
 
-    public static double CalcScore(int kills, int position) =>
-        Math.Round(kills * GetMultiplier(position), 2);
+    public static double GetMultiplier(int position, List<double>? multipliers = null)
+    {
+        var m = multipliers ?? DefaultMultipliers;
+        return (position >= 1 && position <= m.Count) ? m[position - 1] : 1.0;
+    }
+
+    public static double CalcScore(int kills, int position, List<double>? multipliers = null) =>
+        Math.Round(kills * GetMultiplier(position, multipliers), 2);
 
     public static string Fmt(double pts)
     {
@@ -33,7 +34,7 @@ public static class ScoreCalculator
                 var r = game.Results.FirstOrDefault(x => x.Team == team);
                 if (r != null)
                 {
-                    double pts = CalcScore(r.Kills, r.Position);
+                    double pts = CalcScore(r.Kills, r.Position, t.Multipliers);
                     map[team].GameScores.Add(pts);
                     map[team].Total = Math.Round(map[team].Total + pts, 2);
                 }
