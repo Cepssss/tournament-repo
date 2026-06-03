@@ -29,12 +29,27 @@ Winner = team with most total points across all 5 games.
 
 ## Build a standalone .exe
 
+Use this to produce a single `.exe` that runs on any Windows machine — **no .NET install required**.
+
+**Step 1 — install the .NET 8 SDK** (one-time, only needed to build):
+
+Download and install from [dotnet.microsoft.com/download/dotnet/8.0](https://dotnet.microsoft.com/download/dotnet/8.0)
+
+**Step 2 — clone the repo and publish:**
+
 ```bat
-cd TournamentManager
+git clone https://github.com/Cepssss/tournament-repo.git
+cd tournament-repo\TournamentManager
 dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true
 ```
 
-Output goes to `bin\Release\net8.0-windows\win-x64\publish\TournamentManager.exe` — no .NET install needed to run it.
+**Step 3 — find your .exe:**
+
+```
+tournament-repo\TournamentManager\bin\Release\net8.0-windows\win-x64\publish\TournamentManager.exe
+```
+
+Copy that single file anywhere and run it — no installer, no dependencies needed.
 
 ## Data
 
