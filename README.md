@@ -1,18 +1,17 @@
 # Tournament Manager
 
-A desktop app for managing battle royale tournaments. Supports multiple tournaments, 15 teams per tournament, 5 games per tournament, with automatic points calculation.
+A Windows desktop app for managing battle royale tournaments. 15 teams, 5 games, automatic points calculation.
 
 ## Requirements
 
-- [Node.js](https://nodejs.org/) v18 or higher
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) (Windows)
 
 ## Install & Run
 
-```bash
+```bat
 git clone https://github.com/Cepssss/tournament-repo.git
-cd tournament-repo
-npm install
-npm start
+cd tournament-repo\TournamentManager
+dotnet run
 ```
 
 ## Scoring System
@@ -26,18 +25,17 @@ Points per game = **kills × position multiplier**
 | 6th–10th  | ×1.2      |
 | 11th–15th | ×1.0      |
 
-The winner is the team with the most accumulated points across all 5 games.
+Winner = team with most total points across all 5 games.
 
-## Build Installers
+## Build a standalone .exe
 
-```bash
-npm run build:win    # Windows (.exe installer)
-npm run build:mac    # macOS (.dmg)
-npm run build:linux  # Linux (.AppImage)
+```bat
+cd TournamentManager
+dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true
 ```
 
-Built files are output to the `dist/` folder.
+Output goes to `bin\Release\net8.0-windows\win-x64\publish\TournamentManager.exe` — no .NET install needed to run it.
 
-## Data Storage
+## Data
 
-Tournament data is saved automatically to your OS user data directory as `tournaments.json`. No database or server required.
+Tournament data is saved automatically to `%APPDATA%\TournamentManager\tournaments.json`.
